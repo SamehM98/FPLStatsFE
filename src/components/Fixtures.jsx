@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState, useEffect, useMemo } from 'react';
-import apiClient from '../client/apiClient';
 import { DataGrid } from '@mui/x-data-grid'
 import { Box } from '@mui/material';
 import Select from 'react-select';
@@ -8,6 +7,7 @@ import { Button } from '@mui/material';
 import { Form, Formik } from 'formik';
 import { useSearchParams } from 'react-router-dom';
 import Spinner from './Spinner';
+import { sendRequest } from '../helpers/helpers';
 
 function Fixtures() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -19,15 +19,10 @@ function Fixtures() {
 
   useEffect(() => {
     setIsLoading(true);
-    apiClient.get('/fixtures', {
-      params: {
-        begin: searchParams.get('begin') || 0,
-        end: searchParams.get('end') || 0
-      }
-    }).then(({ data }) => {
-      setData(data);
-    })
-      .finally(() => setIsLoading(false));
+    sendRequest('/fixtures', {
+      begin: searchParams.get('begin') || 0,
+      end: searchParams.get('end') || 0
+    }).then(data => setData(data)).finally(() => setIsLoading(false));
   }, [searchParams]);
 
   const fixtureObject = (fixtures) => {
