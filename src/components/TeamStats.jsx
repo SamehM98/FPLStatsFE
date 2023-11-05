@@ -9,7 +9,7 @@ import { teamsStyle } from '../helpers/constants';
 import Table from './shared/Table';
 import AppFormik from './shared/AppFormik';
 
-function TeamSeason() {
+function TeamStats() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [data, setData] = useState(null);
   const [columns, setColumns] = useState([]);
@@ -69,4 +69,4 @@ function TeamSeason() {
   )
 }
 
-export default TeamSeason;
+export default TeamStats;

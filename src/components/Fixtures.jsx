@@ -19,8 +19,8 @@ function Fixtures() {
   useEffect(() => {
     setIsLoading(true);
     sendRequest('/fixtures', {
-      begin: searchParams.get('begin') || 0,
-      end: searchParams.get('end') || 0
+      begin: searchParams.get('begin'),
+      end: searchParams.get('end')
     }).then(data => setData(data)).finally(() => setIsLoading(false));
   }, [searchParams]);
 
