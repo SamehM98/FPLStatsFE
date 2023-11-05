@@ -9,7 +9,7 @@ function AppFormik({ initialValues, formikChildren, onSubmit, text, optionsMap }
       <Form onSubmit={handleSubmit}>
         <div style={formikStyle}>
           {formikChildren.map((child) => (
-            <AppSelect child={child} options={optionsMap[child]} />
+            <AppSelect child={child} options={optionsMap[child]} key={child} />
           ))}
           <Button variant="outlined" type="submit">{text}</Button>
         </div>

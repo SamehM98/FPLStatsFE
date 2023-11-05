@@ -1,7 +1,8 @@
 export const labels = {
   expected_goals: 'xG',
   expected_goals_conceded: 'xGC',
-  name: 'Name',
+  name: 'Team',
+  web_name: 'Name',
 }
 
 export const formikStyle = {
