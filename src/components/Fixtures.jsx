@@ -3,7 +3,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { Box } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 import Spinner from './Spinner';
-import { sendRequest, fixtureObject } from '../helpers/helpers';
+import { sendRequest, fixtureObject, formikValuesToParams, gameweekOptions } from '../helpers/helpers';
 import { fixturesStyle } from '../helpers/constants';
 import Table from './shared/Table';
 import AppFormik from './shared/AppFormik';
@@ -35,16 +35,9 @@ function Fixtures() {
     })
   ), [begin, end, data]);
 
-  const options = useMemo(() => {
-    const selectOptions = [];
-    if (!currentGameweek) return selectOptions;
-
-    for (let i = currentGameweek; i <= 38; i++) {
-      selectOptions.push({ value: i, label: `Gameweek ${i}` });
-    }
-
-    return selectOptions;
-  }, [currentGameweek]);
+  const options = useMemo(() => (
+    currentGameweek ? gameweekOptions(currentGameweek, 38) : []
+  ), [currentGameweek]);
 
   const columns = useMemo(() => {
     if (!begin || !end) return [];
@@ -79,10 +72,7 @@ function Fixtures() {
     end: options,
   }
   const onSubmit = (values) => {
-    setSearchParams({
-      begin: values.begin.value,
-      end: values.end.value,
-    })
+    setSearchParams(formikValuesToParams(values))
   }
 
   if (isLoading) return <Spinner />

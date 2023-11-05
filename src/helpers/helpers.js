@@ -42,3 +42,23 @@ export const arrayToOptions = (arr) => (
     { value: a, label: a }
   ))
 );
+
+
+export const formikValuesToParams = (values) => {
+  const params = {};
+  Object.keys(values).forEach(v => {
+    if (values[v])
+      params[v] = values[v].value;
+  });
+
+  return params;
+};
+
+export const gameweekOptions = (begin, end) => {
+  const options = [];
+  for (let i = begin; i <= end; i++) {
+    options.push({ value: i, label: `Gameweek ${i}` });
+  }
+
+  return options;
+}
