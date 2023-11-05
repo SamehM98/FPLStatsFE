@@ -37,7 +37,7 @@ export const getColumns = (keys) => (
   ))
 );
 
-export const arrayToSelect = (arr) => (
+export const arrayToOptions = (arr) => (
   arr.map(a => (
     { value: a, label: a }
   ))
