@@ -1,13 +1,12 @@
 import React from 'react';
 import { useState, useEffect, useMemo } from 'react';
-import { DataGrid } from '@mui/x-data-grid'
 import { Box } from '@mui/material';
-import Select from 'react-select';
-import { Button } from '@mui/material';
-import { Form, Formik } from 'formik';
 import { useSearchParams } from 'react-router-dom';
 import Spinner from './Spinner';
-import { sendRequest } from '../helpers/helpers';
+import { sendRequest, fixtureObject } from '../helpers/helpers';
+import { fixturesStyle } from '../helpers/constants';
+import Table from './shared/Table';
+import AppFormik from './shared/AppFormik';
 
 function Fixtures() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -24,23 +23,6 @@ function Fixtures() {
       end: searchParams.get('end') || 0
     }).then(data => setData(data)).finally(() => setIsLoading(false));
   }, [searchParams]);
-
-  const fixtureObject = (fixtures) => {
-    let difficulty = 0;
-    let text = 'Blank';
-    for (let i = 0; i < fixtures.length; i++) {
-      if (i === 0) {
-        difficulty = fixtures[i].difficulty;
-        text = `${fixtures[i].opponent}${fixtures[i].home ? '(H)' : '(A)'}`
-      }
-      else {
-        difficulty = (difficulty + fixtures[i].difficulty) / (i + 1);
-        text += `  ,  ${fixtures[i].opponent}${fixtures[i].home ? '(H)' : '(A)'}`;
-      }
-    }
-
-    return { difficulty, text }
-  };
 
   const rows = useMemo(() => (
     data?.stats.map(team => {
@@ -90,9 +72,12 @@ function Fixtures() {
     return col;
   }, [begin, end]);
 
-  const formikInitialValues = { begin: options.find(o => o.value === begin), end: options.find(o => o.value === end) };
+  const initialValues = { begin: options.find(o => o.value === begin), end: options.find(o => o.value === end) };
   const formikChildren = ['begin', 'end'];
-
+  const optionsMap = {
+    begin: options,
+    end: options,
+  }
   const onSubmit = (values) => {
     setSearchParams({
       begin: values.begin.value,
@@ -104,64 +89,16 @@ function Fixtures() {
 
   return (
     <Box padding={5}>
-      <Formik initialValues={formikInitialValues} enableReinitialize id="myForm" onSubmit={onSubmit}>
-        {({ values, setFieldValue, handleSubmit }) =>
-          <Form onSubmit={handleSubmit}>
-            <div style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              width: '60%',
-              paddingBottom: '16px'
-            }}>
-              {formikChildren.map((child) => (
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <span style={{ marginRight: '8px', textTransform: 'capitalize' }}>{child}</span>
-                  <Select
-                    options={options}
-                    value={values[child]}
-                    name={child}
-                    styles={{
-                      control: (provided) => ({
-                        ...provided,
-                        width: '200px',
-                      }),
-                    }}
-                    onChange={(v) => setFieldValue(child, v)}
-                  />
-                </div>
-              ))}
-              <Button variant="outlined" type="submit">Get Fixtures</Button>
-            </div>
-          </Form>}
-      </Formik>
-      <DataGrid
-        disableColumnFilter
-        disableColumnMenu
-        pageSizeOptions={[]}
-        disableColumnSelector
-        rows={rows || []}
-        sx={
-          {
-            fontWeight: 550,
-            '.easy': {
-              backgroundColor: '#3cb371',
-            },
-            '.mid': {
-              backgroundColor: '#f8a605',
-            },
-            '.hard': {
-              backgroundColor: '#ff0000',
-            },
-            '.blank': {
-              backgroundColor: '#A0A0A0',
-            },
-            '.header': {
-              fontSize: '1.0rem'
-            },
-          }
-        }
+      <AppFormik initialValues={initialValues}
+        text="Get Fixtures"
+        onSubmit={onSubmit}
+        optionsMap={optionsMap}
+        formikChildren={formikChildren}
+      />
+      <Table
+        rows={rows}
         columns={columns}
+        style={fixturesStyle}
         getCellClassName={(params) => {
           if (params.field === 'name')
             return null;
