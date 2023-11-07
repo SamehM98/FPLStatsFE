@@ -9,7 +9,7 @@ export const formikStyle = {
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  width: '60%',
+  width: '75%',
   paddingBottom: '16px'
 };
 
@@ -38,9 +38,9 @@ export const teamsStyle = {
     fontSize: '1.0rem'
   },
   '.xG': {
-    backgroundColor: '#3cb371',
+    backgroundColor: '#08DA08',
   },
   '.xGC': {
-    backgroundColor: '#ff0000',
+    backgroundColor: '#ED3E3E',
   },
 };
