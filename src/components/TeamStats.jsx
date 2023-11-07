@@ -1,44 +1,66 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Box } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 import Spinner from './Spinner';
-import { arrayToOptions, getColumns } from '../helpers/helpers';
+import { arrayToOptions, getColumns, gameweekOptions, formikValuesToParams } from '../helpers/helpers';
 import { sendRequest } from '../helpers/helpers';
 import { teamsStyle } from '../helpers/constants';
 import Table from './shared/Table';
 import AppFormik from './shared/AppFormik';
 
-function TeamStats() {
+function TeamStats({ gameweekRange }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [data, setData] = useState(null);
   const [columns, setColumns] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const comparators = data?.comparators ? arrayToOptions(data.comparators) : [];
+  const begin = parseInt(searchParams.get('begin')) || data?.begin || 0;
+  const end = parseInt(searchParams.get('end')) || data?.end || 0;
+  const currentGameweek = data?.currentGameweek;
 
   useEffect(() => {
     setIsLoading(true);
-    sendRequest('/season/teams', {
-      sort: searchParams.get('sort')
+    sendRequest(`/${gameweekRange ? 'gameweek' : 'season'}/teams`, {
+      sort: searchParams.get('sort'),
+      ...(gameweekRange && {
+        begin: searchParams.get('begin'),
+        end: searchParams.get('end')
+      })
     }).then(data => setData(data)).finally(() => setIsLoading(false));
-  }, [searchParams]);
+  }, [searchParams, gameweekRange]);
 
   useEffect(() => {
     if (data && !columns.length) setColumns(getColumns(Object.keys(data.stats[0])))
     // eslint-disable-next-line
   }, [data]);
 
-  const formikChildren = ['sort'];
+  const options = useMemo(() => (
+    currentGameweek ? gameweekOptions(1, currentGameweek) : []
+  ), [currentGameweek]);
+
+  const formikChildren = ['sort',
+    ...gameweekRange ? ['begin', 'end'] : []
+  ];
+
   const optionsMap = {
     sort: comparators,
-  };
-  const onSubmit = (values) => {
-    setSearchParams({
-      sort: values.sort.value,
+    ...(gameweekRange && {
+      begin: options,
+      end: options,
     })
   };
+
+  const onSubmit = (values) => {
+    setSearchParams(formikValuesToParams(values))
+  };
+
   const initialValues = {
-    sort: comparators.find(o => o.value === (searchParams.get('sort') || 'xG'))
+    sort: comparators.find(o => o.value === (searchParams.get('sort') || 'xG')),
+    ...(gameweekRange && {
+      begin: options.find(o => o.value === begin),
+      end: options.find(o => o.value === end)
+    })
   }
 
   if (isLoading) return <Spinner />
