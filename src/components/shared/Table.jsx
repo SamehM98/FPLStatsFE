@@ -1,11 +1,14 @@
 import { DataGrid } from "@mui/x-data-grid";
 
-function Table({ rows, columns, getCellClassName, pageSizeOptions, style }) {
+function Table({ rows, columns, getCellClassName, pageSizeOptions, style, pageSize }) {
   return (
     <DataGrid
       disableColumnFilter
       disableColumnMenu
       pageSizeOptions={pageSizeOptions || []}
+      initialState={{
+        pagination: { paginationModel: { pageSize } },
+      }}
       disableColumnSelector
       rows={rows || []}
       sx={style}
