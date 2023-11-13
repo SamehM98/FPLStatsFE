@@ -28,7 +28,7 @@ export const getColumns = (keys) => (
     {
       field: key,
       headerName: labels[key],
-      minWidth: 75,
+      minWidth: 150,
       flex: 1,
       sortable: false,
       headerAlign: 'center',
