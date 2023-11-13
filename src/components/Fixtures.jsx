@@ -89,6 +89,7 @@ function Fixtures() {
         rows={rows}
         columns={columns}
         style={fixturesStyle}
+        pageSize={20}
         getCellClassName={(params) => {
           if (params.field === 'name')
             return null;
