@@ -18,6 +18,8 @@ export const labels = {
   goals_conceded: 'Goals conceded',
   expected_goals_conceded_per_90: 'xGCper90',
   clean_sheets: 'Clean sheets',
+  saves_per_90: 'Saves per 90',
+  saves: 'Saves'
 }
 
 export const formikStyle = {
@@ -81,6 +83,8 @@ export const statsClasses = {
   goals_conceded: 'red',
   expected_goals_conceded_per_90: 'red',
   clean_sheets: 'green',
+  saves_per_90: 'green',
+  saves: 'green'
 }
 
 export const positions = [
