@@ -3,6 +3,21 @@ export const labels = {
   expected_goals_conceded: 'xGC',
   name: 'Team',
   web_name: 'Name',
+  selected_by_percent: 'Selection %',
+  total_points: 'Points',
+  minutes: 'Minutes',
+  starts: 'Starts',
+  bonus: 'Bonus',
+  goals_scored: 'Goals',
+  assists: 'Assists',
+  expected_assists: 'xA',
+  expected_goal_involvements: 'xGI',
+  expected_goals_per_90: 'xGper90',
+  expected_assists_per_90: 'xAper90',
+  expected_goal_involvements_per_90: 'xGIper90',
+  goals_conceded: 'Goals conceded',
+  expected_goals_conceded_per_90: 'xGCper90',
+  clean_sheets: 'Clean sheets',
 }
 
 export const formikStyle = {
@@ -32,15 +47,57 @@ export const fixturesStyle = {
   },
 };
 
-export const teamsStyle = {
+export const statsStyle = {
   fontWeight: 550,
   '.header': {
     fontSize: '1.0rem'
   },
-  '.xG': {
+  '.green': {
     backgroundColor: '#08DA08',
   },
-  '.xGC': {
+  '.red': {
     backgroundColor: '#ED3E3E',
   },
+  '.yellow': {
+    backgroundColor: '#FFFF00',
+  }
 };
+
+export const statsClasses = {
+  expected_goals: 'green',
+  expected_goals_conceded: 'red',
+  selected_by_percent: 'yellow',
+  total_points: 'yellow',
+  minutes: 'yellow',
+  starts: 'yellow',
+  bonus: 'yellow',
+  goals_scored: 'green',
+  assists: 'green',
+  expected_assists: 'green',
+  expected_goal_involvements: 'green',
+  expected_goals_per_90: 'green',
+  expected_assists_per_90: 'green',
+  expected_goal_involvements_per_90: 'green',
+  goals_conceded: 'red',
+  expected_goals_conceded_per_90: 'red',
+  clean_sheets: 'green',
+}
+
+export const positions = [
+  {
+    id: 1,
+    path: 'goalkeepers'
+  },
+  {
+    id: 2,
+    path: 'defenders'
+  },
+  {
+    id: 3,
+    path: 'midfielders'
+  },
+  {
+    id: 4,
+    path: 'forwards'
+  }
+]
