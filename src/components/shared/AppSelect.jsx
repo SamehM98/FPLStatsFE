@@ -14,7 +14,7 @@ function AppSelect({ child, options }) {
         styles={{
           control: (provided) => ({
             ...provided,
-            width: '200px',
+            width: '175px',
           }),
         }}
         onChange={(v) => setFieldValue(child, v)}

@@ -27,7 +27,7 @@ export const getColumns = (keys, teams) => (
   keys.filter(key => key in labels).map(key => (
     {
       field: key,
-      headerName: labels[key],
+      headerName: labels[key].label,
       minWidth: 150,
       flex: 1,
       sortable: false,

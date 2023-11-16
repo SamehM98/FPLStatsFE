@@ -5,7 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 import Spinner from './Spinner';
 import { arrayToOptions, getColumns, gameweekOptions, formikValuesToParams, teamOptions } from '../helpers/helpers';
 import { sendRequest } from '../helpers/helpers';
-import { statsStyle, statsClasses } from '../helpers/constants';
+import { labels, style } from '../helpers/constants';
 import Table from './shared/Table';
 import AppFormik from './shared/AppFormik';
 
@@ -97,11 +97,11 @@ function Stats({ gameweekRange, position, playerStats }) {
         formikChildren={formikChildren}
       />
       <Table
-        style={statsStyle}
+        style={style}
         rows={data?.stats}
         columns={columns}
         pageSize={10}
-        getCellClassName={(params) => statsClasses[params.field]}
+        getCellClassName={(params) => labels[params.field].class}
       />
     </Box>
   )

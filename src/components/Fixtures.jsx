@@ -4,7 +4,7 @@ import { Box } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 import Spinner from './Spinner';
 import { sendRequest, fixtureObject, formikValuesToParams, gameweekOptions } from '../helpers/helpers';
-import { fixturesStyle } from '../helpers/constants';
+import { style } from '../helpers/constants';
 import Table from './shared/Table';
 import AppFormik from './shared/AppFormik';
 
@@ -88,7 +88,7 @@ function Fixtures() {
       <Table
         rows={rows}
         columns={columns}
-        style={fixturesStyle}
+        style={style}
         pageSize={20}
         getCellClassName={(params) => {
           if (params.field === 'name')
