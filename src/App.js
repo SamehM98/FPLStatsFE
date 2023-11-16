@@ -1,15 +1,26 @@
 import { Routes, Route } from 'react-router-dom';
 import Fixtures from './components/Fixtures';
 import './App.css';
-import TeamStats from './components/TeamStats';
+import Stats from './components/Stats';
+import { positions } from './helpers/constants';
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<h1>Home</h1>} />
       <Route path="/fixtures" element={<Fixtures />} />
-      <Route path="/season/team" element={<TeamStats gameweekRange={false} />} />
-      <Route path="/gameweeks/team" element={<TeamStats gameweekRange />} />
+      <Route path="/gameweeks">
+        {
+          positions.map(position => <Route path={position.path} element={<Stats position={position.id} gameweekRange playerStats />} />)
+        }
+        <Route path="team" element={<Stats gameweekRange />} />
+      </Route>
+      <Route path="/season">
+        {
+          positions.map(position => <Route path={position.path} element={<Stats position={position.id} playerStats />} />)
+        }
+        <Route path="team" element={<Stats />} />
+      </Route>
     </Routes>
   );
 }
