@@ -19,7 +19,6 @@ function Stats({ gameweekRange, position, playerStats }) {
   const end = parseInt(searchParams.get('end')) || data?.end || 0;
   const currentGameweek = data?.currentGameweek;
   const teams = data?.teams ? teamOptions(data.teams) : [];
-  console.log(teams)
 
   useEffect(() => {
     const getTeamStats = () => {
