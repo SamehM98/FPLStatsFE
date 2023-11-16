@@ -13,13 +13,13 @@ function App() {
         {
           positions.map(position => <Route path={position.path} element={<Stats position={position.id} gameweekRange playerStats />} />)
         }
-        <Route path="team" element={<Stats gameweekRange />} />
+        <Route path="teams" element={<Stats gameweekRange />} />
       </Route>
       <Route path="/season">
         {
           positions.map(position => <Route path={position.path} element={<Stats position={position.id} playerStats />} />)
         }
-        <Route path="team" element={<Stats />} />
+        <Route path="teams" element={<Stats />} />
       </Route>
     </Routes>
   );
