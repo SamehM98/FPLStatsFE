@@ -23,7 +23,7 @@ export const fixtureObject = (fixtures) => {
   return { difficulty, text }
 };
 
-export const getColumns = (keys) => (
+export const getColumns = (keys, teams) => (
   keys.filter(key => key in labels).map(key => (
     {
       field: key,
@@ -33,6 +33,14 @@ export const getColumns = (keys) => (
       sortable: false,
       headerAlign: 'center',
       headerClassName: 'header',
+      ...(key === 'now_cost' && {
+        valueGetter: (v) => (v.value / 10),
+      }),
+      ...(key === 'team' && teams.length && {
+        valueGetter: (v) => {
+          return (teams[v.value - 1].label)
+        }
+      }),
     }
   ))
 );
@@ -62,3 +70,9 @@ export const gameweekOptions = (begin, end) => {
 
   return options;
 }
+
+export const teamOptions = (teams) => (
+  teams.map((team) => ({
+    value: team.id, label: team.name
+  }))
+)
