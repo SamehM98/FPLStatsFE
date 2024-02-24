@@ -3,11 +3,12 @@ import Fixtures from './components/Fixtures';
 import './App.css';
 import Stats from './components/Stats';
 import { positions } from './helpers/constants';
+import Home from './components/Home';
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<h1>Home</h1>} />
+      <Route path="/" element={<Home />} />
       <Route path="/fixtures" element={<Fixtures />} />
       <Route path="/gameweeks">
         {
